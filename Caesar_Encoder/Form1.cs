@@ -6,6 +6,7 @@ namespace Caesar_Encoder
 {
     public partial class Form1 : Form
     {
+        char tempchar = ' ';
         public Form1()
         {
             InitializeComponent();
@@ -92,57 +93,33 @@ namespace Caesar_Encoder
 
         private char Caesar(char a, int shift)
         {
-            int index = 0;
+            tempchar = ' ';
             const string ruredux = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя";
             const string Ruredux = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
             const string enredux = "abcdefghijklmnopqrstuvwxyz";
             const string Enredux = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             const string Numredux = "0123456789";
             const string Symredux = "!@#$%^&*()_+=-*/|\\<>?.,\"{}[];:£№'";
-            
-            if(ruredux.IndexOf(a) != -1)
+
+            ChangeIndex(ruredux, a, shift);
+            ChangeIndex(Ruredux, a, shift);
+            ChangeIndex(enredux, a, shift);
+            ChangeIndex(Enredux, a, shift);
+            ChangeIndex(Numredux, a, shift);
+            ChangeIndex(Symredux, a, shift);
+            return tempchar;
+        }
+
+        private void ChangeIndex(string redux, char a, int shift)
+        {
+            int index = 0;
+            if (redux.IndexOf(a) != -1)
             {
-                index = ruredux.IndexOf(a) + shift;
-                index %= ruredux.Length;
-                if (index < 0) { index = ruredux.Length + index; }
-                return ruredux[index];
+                index = redux.IndexOf(a) + shift;
+                index %= redux.Length;
+                if (index < 0) { index = redux.Length + index; }
+                tempchar = redux[index];
             }
-            if (Ruredux.IndexOf(a) != -1)
-            {
-                index = Ruredux.IndexOf(a) + shift;
-                index %= Ruredux.Length;
-                if (index < 0) { index = Ruredux.Length + index; }
-                return Ruredux[index];
-            }
-            if (enredux.IndexOf(a) != -1)
-            {
-                index = enredux.IndexOf(a) + shift;
-                index %= enredux.Length;
-                if (index < 0) { index = 26 + enredux.Length; }
-                return enredux[index];
-            }
-            if (Enredux.IndexOf(a) != -1)
-            {
-                index = Enredux.IndexOf(a) + shift;
-                index %= Enredux.Length;
-                if (index < 0) { index = Enredux.Length + index; }
-                return Enredux[index];
-            }
-            if (Numredux.IndexOf(a) != -1)
-            {
-                index = Numredux.IndexOf(a) + shift;
-                index %= Numredux.Length;
-                if (index < 0) { index = Numredux.Length + index; }
-                return Numredux[index];
-            }
-            if (Symredux.IndexOf(a) != -1)
-            {
-                index = Symredux.IndexOf(a) + shift;
-                index %= Symredux.Length;
-                if (index < 0) { index = Symredux.Length + index; }
-                return Symredux[index];
-            }
-            return ' ';
         }
     }
 }
